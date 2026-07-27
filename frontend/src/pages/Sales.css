@@ -1,0 +1,183 @@
+.sales-container {
+    background: #ffffff;
+    margin-top: 30px;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+}
+
+.sales-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.sales-header h2 {
+    color: #1e293b;
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+
+.sales-header p {
+    color: #64748b;
+    font-size: 15px;
+}
+
+
+/* Form */
+
+.sales-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.sales-form select,
+.sales-form input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: .3s;
+}
+
+.sales-form select:focus,
+.sales-form input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+
+/* Bill Card */
+
+.bill-card {
+    grid-column: 1/3;
+    background: #f8fafc;
+    border-left: 6px solid #10b981;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 5px;
+}
+
+.bill-card h3 {
+    color: #1e293b;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.bill-details {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.bill-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.bill-row span {
+    color: #64748b;
+}
+
+.bill-row strong {
+    color: #1e293b;
+}
+
+.bill-card hr {
+    border: none;
+    border-top: 1px solid #d1d5db;
+    margin: 10px 0;
+}
+
+.bill-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.bill-total span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.bill-total h2 {
+    color: #10b981;
+    font-size: 34px;
+}
+
+
+/* Button */
+
+.sale-btn {
+    grid-column: 1/3;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #10b981;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.sale-btn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+}
+
+.sale-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+
+/* Tablet */
+
+@media(max-width:992px) {
+    .sales-form {
+        grid-template-columns: 1fr;
+    }
+    .bill-card,
+    .sale-btn {
+        grid-column: 1;
+    }
+}
+
+
+/* Mobile */
+
+@media(max-width:768px) {
+    .sales-container {
+        padding: 20px;
+    }
+    .sales-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .sales-header h2 {
+        font-size: 24px;
+    }
+    .bill-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .bill-total {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .bill-total h2 {
+        font-size: 28px;
+    }
+    .sale-btn {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,25 @@
+.login-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2563eb;
+}
+
+.login-card {
+    width: 350px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.login-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-card input,
+.login-card button {
+    padding: 12px;
+}

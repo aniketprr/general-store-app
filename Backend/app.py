@@ -189,15 +189,20 @@ def dashboard():
     cur.execute("SELECT COUNT(*) FROM products WHERE quantity < 10")
     low_stock = cur.fetchone()[0]
 
+    # Total Profit
+    cur.execute("SELECT COALESCE(SUM(profit),0) FROM sales")
+    profit = cur.fetchone()[0]
+
     cur.close()
     conn.close()
 
     return jsonify({
-        "products": total_products,
-        "revenue": float(revenue),
-        "sales": total_sales,
-        "low_stock": low_stock
-    })
+    "products": total_products,
+    "revenue": float(revenue),
+    "profit": float(profit),
+    "sales": total_sales,
+    "low_stock": low_stock
+})
 # =====================================================
 # RECORD SALE
 # =====================================================

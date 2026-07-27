@@ -9,83 +9,60 @@ import Products from "./pages/Products";
 import Sales from "./pages/Sales";
 import Reports from "./pages/Reports";
 import SalesHistory from "./pages/SalesHistory";
-import Login from "./pages/Login";
 import Settings from "./pages/Settings";
 
 function App() {
-    const [loggedIn, setLoggedIn] = useState(
-        localStorage.getItem("loggedIn") === "true"
-    );
-
     const [activePage, setActivePage] = useState("dashboard");
-
-    // Search State
     const [searchTerm, setSearchTerm] = useState("");
 
-    const handleLogin = () => {
-        localStorage.setItem("loggedIn", "true");
-        setLoggedIn(true);
-    };
+    // Login disabled for public demo
+    const handleLogout = () => {};
 
-    const handleLogout = () => {
-        localStorage.removeItem("loggedIn");
-        setLoggedIn(false);
-    };
-    // Login disabled temporarily for public demo
-    // if (!loggedIn) {
-    //   return <Login onLogin = { handleLogin }
-    //  />;
-}
+    return ( <
+        div className = "app" >
+        <
+        Sidebar activePage = { activePage }
+        setActivePage = { setActivePage }
+        onLogout = { handleLogout }
+        />
 
-return ( <
-    div className = "app" >
+        <
+        div className = "main-content" >
+        <
+        Navbar onLogout = { handleLogout }
+        searchTerm = { searchTerm }
+        setSearchTerm = { setSearchTerm }
+        />
 
-    <
-    Sidebar activePage = { activePage }
-    setActivePage = { setActivePage }
-    onLogout = { handleLogout }
-    />
+        {
+            activePage === "dashboard" && ( <
+                >
+                <
+                Dashboard / >
+                <
+                SalesChart / >
+                <
+                />
+            )
+        }
 
-    <
-    div className = "main-content" >
+        {
+            activePage === "products" && ( <
+                Products searchTerm = { searchTerm }
+                />
+            )
+        }
 
-    <
-    Navbar onLogout = { handleLogout }
-    searchTerm = { searchTerm }
-    setSearchTerm = { setSearchTerm }
-    />
+        { activePage === "sales" && < Sales / > }
 
-    {
-        activePage === "dashboard" && ( <
-            >
-            <
-            Dashboard / >
-            <
-            SalesChart / >
-            <
-            />
-        )
-    }
+        { activePage === "reports" && < Reports / > }
 
-    {
-        activePage === "products" && ( <
-            Products searchTerm = { searchTerm }
-            />
-        )
-    }
+        { activePage === "history" && < SalesHistory / > }
 
-    { activePage === "sales" && < Sales / > }
-
-    { activePage === "reports" && < Reports / > }
-
-    { activePage === "history" && < SalesHistory / > }
-
-    { activePage === "settings" && < Settings / > } <
-    /div>
-
-    <
-    /div>
-);
+        { activePage === "settings" && < Settings / > } <
+        /div> <
+        /div>
+    );
 }
 
 export default App;

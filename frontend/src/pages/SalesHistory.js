@@ -12,7 +12,7 @@ function SalesHistory() {
 
     const fetchSales = () => {
         axios
-            .get("http://127.0.0.1:5000/sales")
+            .get("https://general-store-app-2.onrender.com/sales")
             .then((res) => {
                 setSales(res.data);
             })
@@ -39,8 +39,8 @@ function SalesHistory() {
         th > Product < /th> <
         th > Category < /th> <
         th > Quantity < /th> <
-        th > Total < /th> <
-        /tr> <
+        th > Total < /th> < /
+        tr > <
         /thead>
 
         <

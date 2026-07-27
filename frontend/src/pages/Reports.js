@@ -33,7 +33,7 @@ function Reports() {
 
     useEffect(() => {
         axios
-            .get("http://127.0.0.1:5000/dashboard")
+            .get("https://general-store-app-2.onrender.com/dashboard")
             .then((res) => setDashboard(res.data))
             .catch((err) => console.log(err));
     }, []);
@@ -110,8 +110,8 @@ function Reports() {
         div className = "report-card" >
         <
         h3 > Total Profit < /h3> <
-        h2 > ₹{ dashboard.profit } < /h2> <
-        /div>
+        h2 > ₹{ dashboard.profit } < /h2> < /
+        div >
 
         <
         div className = "report-card" >

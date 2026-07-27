@@ -19,7 +19,7 @@ function Dashboard() {
 
     useEffect(() => {
         axios
-            .get("http://127.0.0.1:5000/dashboard")
+            .get("https://general-store-app-2.onrender.com/dashboard")
             .then((res) => setDashboard(res.data))
             .catch((err) => console.log(err));
     }, []);
@@ -47,8 +47,8 @@ function Dashboard() {
         div className = "card-details" >
         <
         p > Total Products < /p> <
-        h2 > { dashboard.products } < /h2> <
-        /div>
+        h2 > { dashboard.products } < /h2> < /
+        div >
 
         <
         /div>
@@ -67,8 +67,8 @@ function Dashboard() {
         div className = "card-details" >
         <
         p > Total Revenue < /p> <
-        h2 > ₹{ dashboard.revenue } < /h2> <
-        /div>
+        h2 > ₹{ dashboard.revenue } < /h2> < /
+        div >
 
         <
         /div>
@@ -87,8 +87,8 @@ function Dashboard() {
         div className = "card-details" >
         <
         p > Total Sales < /p> <
-        h2 > { dashboard.sales } < /h2> <
-        /div>
+        h2 > { dashboard.sales } < /h2> < /
+        div >
 
         <
         /div>
@@ -107,8 +107,8 @@ function Dashboard() {
         div className = "card-details" >
         <
         p > Low Stock < /p> <
-        h2 > { dashboard.low_stock } < /h2> <
-        /div>
+        h2 > { dashboard.low_stock } < /h2> < /
+        div >
 
         <
         /div>

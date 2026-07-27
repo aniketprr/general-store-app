@@ -24,7 +24,7 @@ function Products({ searchTerm }) {
 
     const fetchProducts = () => {
         axios
-            .get("http://127.0.0.1:5000/products")
+            .get("https://general-store-app-2.onrender.com/products")
             .then((res) => setProducts(res.data))
             .catch((err) => console.log(err));
     };
@@ -48,7 +48,7 @@ function Products({ searchTerm }) {
 
         if (editMode) {
             axios
-                .put(`http://127.0.0.1:5000/products/${editId}`, productData)
+                .put(`https://general-store-app-2.onrender.com/products/${editId}`, productData)
                 .then(() => {
                     toast.success("Product Updated Successfully!");
 
@@ -70,7 +70,7 @@ function Products({ searchTerm }) {
                 });
         } else {
             axios
-                .post("http://127.0.0.1:5000/products", productData)
+                .post("https://general-store-app-2.onrender.com/products", productData)
                 .then(() => {
                     toast.success("Product Added Successfully!");
 
@@ -112,7 +112,7 @@ function Products({ searchTerm }) {
         if (!window.confirm("Delete this product?")) return;
 
         axios
-            .delete(`http://127.0.0.1:5000/products/${id}`)
+            .delete(`https://general-store-app-2.onrender.com/products/${id}`)
             .then(() => {
                 toast.success("Product Deleted Successfully!");
                 fetchProducts();
@@ -138,8 +138,8 @@ function Products({ searchTerm }) {
         div >
         <
         h2 > 📦Product Management < /h2> <
-        p > Manage inventory, stock and pricing < /p> <
-        /div> <
+        p > Manage inventory, stock and pricing < /p> < /
+        div > <
         /div>
 
         <
@@ -155,14 +155,15 @@ function Products({ searchTerm }) {
         <
         select value = { categoryFilter }
         onChange = {
-            (e) => setCategoryFilter(e.target.value) } >
+            (e) => setCategoryFilter(e.target.value)
+        } >
         <
         option value = "" > All Categories < /option> <
         option value = "Grocery" > Grocery < /option> <
         option value = "Snack" > Snack < /option> <
         option value = "Beverage" > Beverage < /option> <
-        option value = "Dairy" > Dairy < /option> <
-        /select>
+        option value = "Dairy" > Dairy < /option> < /
+        select >
 
         <
         /div>
@@ -232,8 +233,8 @@ function Products({ searchTerm }) {
         th > Quantity < /th> <
         th > Price(₹) < /th> <
         th > Status < /th> <
-        th > Actions < /th> <
-        /tr> <
+        th > Actions < /th> < /
+        tr > <
         /thead>
 
         <
@@ -245,10 +246,11 @@ function Products({ searchTerm }) {
                 <
                 td colSpan = "7"
                 style = {
-                    { textAlign: "center", padding: "30px" } } >
+                    { textAlign: "center", padding: "30px" }
+                } >
                 No Products Found <
-                /td> <
-                /tr>
+                /td> < /
+                tr >
             ) : (
                 filteredProducts.map((product) => ( <
                     tr key = { product[0] } >
@@ -284,15 +286,15 @@ function Products({ searchTerm }) {
                     <
                     button className = "edit-btn"
                     onClick = {
-                        () => handleEdit(product) } >
-                    ✏Edit <
+                        () => handleEdit(product)
+                    } > ✏Edit <
                     /button>
 
                     <
                     button className = "delete-btn"
                     onClick = {
-                        () => handleDelete(product[0]) } >
-                    🗑Delete <
+                        () => handleDelete(product[0])
+                    } > 🗑Delete <
                     /button>
 
                     <

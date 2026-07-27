@@ -31,61 +31,61 @@ function App() {
         localStorage.removeItem("loggedIn");
         setLoggedIn(false);
     };
+    // Login disabled temporarily for public demo
+    // if (!loggedIn) {
+    //   return <Login onLogin = { handleLogin }
+    //  />;
+}
 
-    if (!loggedIn) {
-        return <Login onLogin = { handleLogin }
-        />;
+return ( <
+    div className = "app" >
+
+    <
+    Sidebar activePage = { activePage }
+    setActivePage = { setActivePage }
+    onLogout = { handleLogout }
+    />
+
+    <
+    div className = "main-content" >
+
+    <
+    Navbar onLogout = { handleLogout }
+    searchTerm = { searchTerm }
+    setSearchTerm = { setSearchTerm }
+    />
+
+    {
+        activePage === "dashboard" && ( <
+            >
+            <
+            Dashboard / >
+            <
+            SalesChart / >
+            <
+            />
+        )
     }
 
-    return ( <
-        div className = "app" >
+    {
+        activePage === "products" && ( <
+            Products searchTerm = { searchTerm }
+            />
+        )
+    }
 
-        <
-        Sidebar activePage = { activePage }
-        setActivePage = { setActivePage }
-        onLogout = { handleLogout }
-        />
+    { activePage === "sales" && < Sales / > }
 
-        <
-        div className = "main-content" >
+    { activePage === "reports" && < Reports / > }
 
-        <
-        Navbar onLogout = { handleLogout }
-        searchTerm = { searchTerm }
-        setSearchTerm = { setSearchTerm }
-        />
+    { activePage === "history" && < SalesHistory / > }
 
-        {
-            activePage === "dashboard" && ( <
-                >
-                <
-                Dashboard / >
-                <
-                SalesChart / >
-                <
-                />
-            )
-        }
+    { activePage === "settings" && < Settings / > } <
+    /div>
 
-        {
-            activePage === "products" && ( <
-                Products searchTerm = { searchTerm }
-                />
-            )
-        }
-
-        { activePage === "sales" && < Sales / > }
-
-        { activePage === "reports" && < Reports / > }
-
-        { activePage === "history" && < SalesHistory / > }
-
-        { activePage === "settings" && < Settings / > } <
-        /div>
-
-        <
-        /div>
-    );
+    <
+    /div>
+);
 }
 
 export default App;

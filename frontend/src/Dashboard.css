@@ -2,21 +2,74 @@
     margin-top: 25px;
 }
 
-.dashboard h1 {
-    font-size: 34px;
-    color: #1e293b;
-    margin-bottom: 25px;
+
+/* =========================
+   Header
+========================= */
+
+.dashboard-header {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    margin-bottom: 28px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.dashboard-header h1 {
+    font-size: 36px;
+    color: #0f172a;
+    margin-bottom: 8px;
     font-weight: 700;
 }
+
+.dashboard-header p {
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   Loading & Error
+========================= */
+
+.dashboard-loading,
+.dashboard-error {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 60px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.retry-btn {
+    margin-top: 20px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.retry-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   KPI Cards
+========================= */
 
 .dashboard-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 22px;
+    margin-bottom: 30px;
 }
-
-
-/* Card */
 
 .card {
     background: #ffffff;
@@ -25,104 +78,215 @@
     display: flex;
     align-items: center;
     gap: 18px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
-    transition: all .3s ease;
-    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, .12);
+    box-shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
 }
 
-
-/* Icon */
-
 .card-icon {
-    width: 68px;
-    height: 68px;
-    border-radius: 18px;
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
+    color: #ffffff;
     font-size: 28px;
     flex-shrink: 0;
 }
-
-
-/* Different Colors */
 
 .products-card .card-icon {
     background: #2563eb;
 }
 
 .revenue-card .card-icon {
-    background: #10b981;
+    background: #059669;
 }
 
 .sales-card .card-icon {
-    background: #f59e0b;
+    background: #d97706;
 }
 
 .stock-card .card-icon {
-    background: #ef4444;
+    background: #dc2626;
 }
-
-
-/* Text */
 
 .card-details {
     display: flex;
     flex-direction: column;
 }
 
-.card-details p {
+.card-details span {
     color: #64748b;
     font-size: 15px;
-    margin-bottom: 6px;
 }
 
 .card-details h2 {
     font-size: 34px;
-    color: #1e293b;
+    color: #0f172a;
+    margin: 8px 0;
     font-weight: 700;
 }
 
-
-/* Left Border */
-
-.products-card {
-    border-left: 6px solid #2563eb;
+.card-details small {
+    color: #16a34a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
 }
 
-.revenue-card {
-    border-left: 6px solid #10b981;
-}
-
-.sales-card {
-    border-left: 6px solid #f59e0b;
-}
-
-.stock-card {
-    border-left: 6px solid #ef4444;
+.stock-card .card-details small {
+    color: #dc2626;
 }
 
 
-/* Tablet */
+/* =========================
+   Bottom Grid
+========================= */
 
-@media(max-width:1100px) {
+.dashboard-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1fr;
+    gap: 22px;
+}
+
+
+/* =========================
+   Panels
+========================= */
+
+.quick-actions,
+.recent-activity,
+.inventory-summary {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.quick-actions h3,
+.recent-activity h3,
+.inventory-summary h3 {
+    color: #0f172a;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   Buttons
+========================= */
+
+.quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.quick-actions button {
+    border: none;
+    background: #2563eb;
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.quick-actions button:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   Recent Activity
+========================= */
+
+.recent-activity ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.recent-activity li {
+    padding: 14px 0;
+    border-bottom: 1px solid #e2e8f0;
+    color: #475569;
+    font-size: 15px;
+}
+
+.recent-activity li:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================
+   Inventory Summary
+========================= */
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-item span {
+    color: #64748b;
+}
+
+.summary-item strong {
+    color: #0f172a;
+    font-size: 18px;
+}
+
+
+/* =========================
+   Tablet
+========================= */
+
+@media (max-width: 1100px) {
     .dashboard-cards {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .dashboard-bottom {
+        grid-template-columns: 1fr;
     }
 }
 
 
-/* Mobile */
+/* =========================
+   Mobile
+========================= */
 
-@media(max-width:768px) {
-    .dashboard h1 {
+@media (max-width: 768px) {
+    .dashboard-header {
+        padding: 22px;
+    }
+    .dashboard-header h1 {
         font-size: 28px;
+    }
+    .dashboard-header p {
+        font-size: 14px;
     }
     .dashboard-cards {
         grid-template-columns: 1fr;
@@ -137,5 +301,10 @@
     }
     .card-details h2 {
         font-size: 28px;
+    }
+    .quick-actions,
+    .recent-activity,
+    .inventory-summary {
+        padding: 20px;
     }
 }

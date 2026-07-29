@@ -1,7 +1,8 @@
 import React from "react";
 import "./Navbar.css";
+import { FaBell, FaStore } from "react-icons/fa";
 
-function Navbar() {
+function Navbar({ searchTerm, setSearchTerm }) {
 
     const today = new Date().toLocaleDateString("en-IN", {
         weekday: "long",
@@ -17,9 +18,13 @@ function Navbar() {
         div className = "navbar-left" >
 
         <
-        h2 > 🛒General Store Management < /h2>
-
+        h2 >
         <
+        FaStore style = {
+            { marginRight: "10px" } }
+        />
+        General Store Management <
+        /h2> <
         p > { today } < /p>
 
         <
@@ -30,11 +35,16 @@ function Navbar() {
 
         <
         input type = "text"
-        placeholder = "🔍 Search..." /
-        >
+        placeholder = "🔍 Search Products..."
+        value = { searchTerm }
+        onChange = {
+            (e) => setSearchTerm(e.target.value) }
+        />
 
         <
-        div className = "notification" > 🔔
+        div className = "notification" >
+        <
+        FaBell / >
         <
         /div>
 
@@ -50,8 +60,8 @@ function Navbar() {
         div >
         <
         h4 > Admin < /h4> <
-        small > Store Manager < /small> < /
-        div >
+        small > Store Manager < /small> <
+        /div>
 
         <
         /div>

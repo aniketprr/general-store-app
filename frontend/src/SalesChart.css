@@ -1,42 +1,107 @@
-.chart-card {
+.sales-chart-card {
     background: #ffffff;
-    margin-top: 30px;
     border-radius: 18px;
-    padding: 25px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+    padding: 28px;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.sales-chart-card:hover {
+    box-shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
 }
 
 .chart-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .chart-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 28px;
-    color: #1e293b;
-    margin-bottom: 5px;
+    color: #0f172a;
+    margin-bottom: 6px;
 }
 
 .chart-header p {
     color: #64748b;
+    font-size: 15px;
 }
 
-.chart-container {
-    position: relative;
+.chart-growth {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.chart-wrapper {
     width: 100%;
-    height: 350px;
+    height: 340px;
 }
 
-@media(max-width:768px) {
-    .chart-card {
+
+/* Tooltip */
+
+.recharts-tooltip-wrapper {
+    outline: none;
+}
+
+.recharts-default-tooltip {
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12) !important;
+}
+
+
+/* Axis */
+
+.recharts-cartesian-axis-tick-value {
+    fill: #64748b;
+    font-size: 13px;
+}
+
+.recharts-cartesian-grid line {
+    stroke: #e2e8f0;
+}
+
+
+/* Responsive */
+
+@media (max-width: 992px) {
+    .sales-chart-card {
+        padding: 22px;
+    }
+    .chart-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .sales-chart-card {
         padding: 18px;
     }
     .chart-header h2 {
         font-size: 22px;
     }
-    .chart-container {
-        height: 260px;
+    .chart-wrapper {
+        height: 280px;
+    }
+    .chart-growth {
+        width: 100%;
+        justify-content: center;
     }
 }

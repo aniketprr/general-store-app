@@ -1,21 +1,28 @@
+import React, { Suspense, lazy, useState } from "react";
 import "./App.css";
-import { useState } from "react";
 
 import Sidebar from "./components/Sidebar";
 import Navbar from "./Navbar";
-import Dashboard from "./Dashboard";
-import SalesChart from "./SalesChart";
-import Products from "./pages/Products";
-import Sales from "./pages/Sales";
-import Reports from "./pages/Reports";
-import SalesHistory from "./pages/SalesHistory";
-import Settings from "./pages/Settings";
+
+const Dashboard = lazy(() =>
+    import ("./Dashboard"));
+const SalesChart = lazy(() =>
+    import ("./SalesChart"));
+const Products = lazy(() =>
+    import ("./pages/Products"));
+const Sales = lazy(() =>
+    import ("./pages/Sales"));
+const Reports = lazy(() =>
+    import ("./pages/Reports"));
+const SalesHistory = lazy(() =>
+    import ("./pages/SalesHistory"));
+const Settings = lazy(() =>
+    import ("./pages/Settings"));
 
 function App() {
     const [activePage, setActivePage] = useState("dashboard");
     const [searchTerm, setSearchTerm] = useState("");
 
-    // Login disabled for public demo
     const handleLogout = () => {};
 
     return ( <
@@ -29,40 +36,47 @@ function App() {
         <
         div className = "main-content" >
         <
-        Navbar onLogout = { handleLogout }
-        searchTerm = { searchTerm }
+        Navbar searchTerm = { searchTerm }
         setSearchTerm = { setSearchTerm }
         />
 
-        {
-            activePage === "dashboard" && ( <
-                >
-                <
-                Dashboard / >
-                <
-                SalesChart / >
-                <
-                />
-            )
-        }
+        <
+        Suspense fallback = { < h2 style = {
+                { padding: "30px" } } > Loading... < /h2>}>
 
-        {
-            activePage === "products" && ( <
-                Products searchTerm = { searchTerm }
-                />
-            )
-        }
+            {
+                activePage === "dashboard" && ( <
+                    >
+                    <
+                    Dashboard / >
+                    <
+                    SalesChart / >
+                    <
+                    />
+                )
+            }
 
-        { activePage === "sales" && < Sales / > }
+            {
+                activePage === "products" && ( <
+                    Products searchTerm = { searchTerm }
+                    setSearchTerm = { setSearchTerm }
+                    />
+                )
+            }
 
-        { activePage === "reports" && < Reports / > }
+            { activePage === "sales" && < Sales / > }
 
-        { activePage === "history" && < SalesHistory / > }
+            { activePage === "reports" && < Reports / > }
 
-        { activePage === "settings" && < Settings / > } <
-        /div> <
-        /div>
-    );
-}
+            { activePage === "history" && < SalesHistory / > }
 
-export default App;
+            { activePage === "settings" && < Settings / > }
+
+            <
+            /Suspense> <
+            /div> <
+            /div>
+        );
+    }
+
+    export default App;

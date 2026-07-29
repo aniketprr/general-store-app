@@ -1,10 +1,30 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+    FaBox,
+    FaBoxes,
+    FaExclamationTriangle,
+    FaSearch,
+    FaTag,
+} from "react-icons/fa";
+
 import { toast } from "react-toastify";
+
+import {
+    getProducts,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+} from "../services/productService";
+
+import ProductSkeleton from "../components/ProductSkeleton";
+
 import "./Products.css";
 
-function Products({ searchTerm }) {
+function Products({ searchTerm, setSearchTerm }) {
     const [products, setProducts] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     const [categoryFilter, setCategoryFilter] = useState("");
 
@@ -22,11 +42,20 @@ function Products({ searchTerm }) {
         fetchProducts();
     }, []);
 
-    const fetchProducts = () => {
-        axios
-            .get("https://general-store-app-2.onrender.com/products")
-            .then((res) => setProducts(res.data))
-            .catch((err) => console.log(err));
+    const fetchProducts = async() => {
+        try {
+            setLoading(true);
+            setError(false);
+
+            const data = await getProducts();
+            setProducts(data);
+        } catch (err) {
+            console.error(err);
+            setError(true);
+            toast.error("Unable to load products");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleChange = (e) => {
@@ -36,7 +65,19 @@ function Products({ searchTerm }) {
         });
     };
 
-    const handleSubmit = (e) => {
+    const resetForm = () => {
+        setEditMode(false);
+        setEditId(null);
+
+        setFormData({
+            product_name: "",
+            category: "",
+            quantity: "",
+            price: "",
+        });
+    };
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
 
         const productData = {
@@ -46,47 +87,25 @@ function Products({ searchTerm }) {
             price: Number(formData.price),
         };
 
-        if (editMode) {
-            axios
-                .put(`https://general-store-app-2.onrender.com/products/${editId}`, productData)
-                .then(() => {
-                    toast.success("Product Updated Successfully!");
+        try {
+            if (editMode) {
+                await updateProduct(editId, productData);
+                toast.success("Product Updated Successfully");
+            } else {
+                await addProduct(productData);
+                toast.success("Product Added Successfully");
+            }
 
-                    setEditMode(false);
-                    setEditId(null);
+            resetForm();
+            fetchProducts();
+        } catch (err) {
+            console.error(err);
 
-                    setFormData({
-                        product_name: "",
-                        category: "",
-                        quantity: "",
-                        price: "",
-                    });
-
-                    fetchProducts();
-                })
-                .catch((err) => {
-                    console.log(err);
-                    toast.error("Unable to update product");
-                });
-        } else {
-            axios
-                .post("https://general-store-app-2.onrender.com/products", productData)
-                .then(() => {
-                    toast.success("Product Added Successfully!");
-
-                    setFormData({
-                        product_name: "",
-                        category: "",
-                        quantity: "",
-                        price: "",
-                    });
-
-                    fetchProducts();
-                })
-                .catch((err) => {
-                    console.log(err);
-                    toast.error("Unable to add product");
-                });
+            toast.error(
+                editMode ?
+                "Unable to update product" :
+                "Unable to add product"
+            );
         }
     };
 
@@ -108,27 +127,69 @@ function Products({ searchTerm }) {
         });
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = async(id) => {
         if (!window.confirm("Delete this product?")) return;
 
-        axios
-            .delete(`https://general-store-app-2.onrender.com/products/${id}`)
-            .then(() => {
-                toast.success("Product Deleted Successfully!");
-                fetchProducts();
-            })
-            .catch((err) => console.log(err));
+        try {
+            await deleteProduct(id);
+
+            toast.success("Product Deleted Successfully");
+
+            fetchProducts();
+        } catch (err) {
+            console.error(err);
+
+            toast.error("Unable to delete product");
+        }
     };
 
-    const filteredProducts = products
-        .filter((product) =>
-            product[1].toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        .filter((product) => {
-            if (categoryFilter === "") return true;
-            return product[2] === categoryFilter;
-        });
+    const filteredProducts = useMemo(() => {
+        return products
+            .filter((product) =>
+                product[1]
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
+            )
+            .filter((product) => {
+                if (categoryFilter === "") return true;
 
+                return product[2] === categoryFilter;
+            });
+    }, [products, searchTerm, categoryFilter]);
+
+    const totalProducts = products.length;
+
+    const totalCategories = [
+        ...new Set(products.map((item) => item[2])),
+    ].length;
+
+    const totalStock = products.reduce(
+        (sum, item) => sum + Number(item[3]),
+        0
+    );
+
+    const lowStock = products.filter(
+        (item) => Number(item[3]) < 10
+    ).length;
+
+    if (loading) {
+        return <ProductSkeleton / > ;
+    }
+
+    if (error) {
+        return ( <
+            div className = "products-container" >
+            <
+            h2 > Unable to load products. < /h2>
+
+            <
+            button className = "retry-btn"
+            onClick = { fetchProducts } >
+            Retry <
+            /button> <
+            /div>
+        );
+    }
     return ( <
         div className = "products-container" >
 
@@ -137,36 +198,125 @@ function Products({ searchTerm }) {
         <
         div >
         <
-        h2 > 📦Product Management < /h2> <
-        p > Manage inventory, stock and pricing < /p> < /
-        div > <
+        h2 > 📦Inventory Management < /h2> <
+        p > Manage your products, stock and pricing < /p> <
+        /div> <
+        /div>
+
+        { /* ---------- Statistics ---------- */ }
+
+        <
+        div className = "stats-grid" >
+
+        <
+        div className = "stat-card" >
+        <
+        div className = "stat-icon blue" >
+        <
+        FaBoxes / >
+        <
         /div>
 
         <
-        div className = "top-controls" >
+        div >
+        <
+        span > Total Products < /span> <
+        h3 > { totalProducts } < /h3> <
+        /div> <
+        /div>
+
+        <
+        div className = "stat-card" >
+        <
+        div className = "stat-icon green" >
+        <
+        FaTag / >
+        <
+        /div>
+
+        <
+        div >
+        <
+        span > Categories < /span> <
+        h3 > { totalCategories } < /h3> <
+        /div> <
+        /div>
+
+        <
+        div className = "stat-card" >
+        <
+        div className = "stat-icon orange" >
+        <
+        FaBox / >
+        <
+        /div>
+
+        <
+        div >
+        <
+        span > Total Stock < /span> <
+        h3 > { totalStock } < /h3> <
+        /div> <
+        /div>
+
+        <
+        div className = "stat-card" >
+        <
+        div className = "stat-icon red" >
+        <
+        FaExclamationTriangle / >
+        <
+        /div>
+
+        <
+        div >
+        <
+        span > Low Stock < /span> <
+        h3 > { lowStock } < /h3> <
+        /div> <
+        /div>
+
+        <
+        /div>
+
+        { /* ---------- Toolbar ---------- */ }
+
+        <
+        div className = "toolbar" >
+
+        <
+        div className = "search-box" >
+
+        <
+        FaSearch / >
 
         <
         input type = "text"
-        placeholder = "🔍 Search Product..."
+        placeholder = "Search products..."
         value = { searchTerm }
-        readOnly /
-        >
+        onChange = {
+            (e) => setSearchTerm(e.target.value) }
+        />
+
+        <
+        /div>
 
         <
         select value = { categoryFilter }
         onChange = {
-            (e) => setCategoryFilter(e.target.value)
-        } >
+            (e) => setCategoryFilter(e.target.value) } >
         <
         option value = "" > All Categories < /option> <
         option value = "Grocery" > Grocery < /option> <
         option value = "Snack" > Snack < /option> <
         option value = "Beverage" > Beverage < /option> <
-        option value = "Dairy" > Dairy < /option> < /
-        select >
+        option value = "Dairy" > Dairy < /option> <
+        /select>
 
         <
         /div>
+
+        { /* ---------- Product Form ---------- */ }
 
         <
         form className = "product-form"
@@ -201,20 +351,22 @@ function Products({ searchTerm }) {
 
         <
         input type = "number"
-        step = "0.01"
         name = "price"
         placeholder = "Price"
+        step = "0.01"
         value = { formData.price }
         onChange = { handleChange }
         required /
         >
 
         <
-        button type = "submit" > { editMode ? "✏ Update Product" : "➕ Add Product" } <
+        button type = "submit" > { editMode ? "Update Product" : "Add Product" } <
         /button>
 
         <
         /form>
+
+        { /* ---------- Product Table ---------- */ }
 
         <
         div className = "table-container" >
@@ -224,17 +376,35 @@ function Products({ searchTerm }) {
 
         <
         thead >
+
         <
         tr >
+
         <
-        th > ID < /th> <
-        th > Product < /th> <
-        th > Category < /th> <
-        th > Quantity < /th> <
-        th > Price(₹) < /th> <
-        th > Status < /th> <
-        th > Actions < /th> < /
-        tr > <
+        th > ID < /th>
+
+        <
+        th > Product < /th>
+
+        <
+        th > Category < /th>
+
+        <
+        th > Quantity < /th>
+
+        <
+        th > Price < /th>
+
+        <
+        th > Status < /th>
+
+        <
+        th > Actions < /th>
+
+        <
+        /tr>
+
+        <
         /thead>
 
         <
@@ -243,14 +413,15 @@ function Products({ searchTerm }) {
         {
             filteredProducts.length === 0 ? ( <
                 tr >
+
                 <
                 td colSpan = "7"
-                style = {
-                    { textAlign: "center", padding: "30px" }
-                } >
+                className = "empty-state" >
                 No Products Found <
-                /td> < /
-                tr >
+                /td>
+
+                <
+                /tr>
             ) : (
                 filteredProducts.map((product) => ( <
                     tr key = { product[0] } >
@@ -268,33 +439,37 @@ function Products({ searchTerm }) {
                     td > { product[3] } < /td>
 
                     <
-                    td > ₹{ Number(product[4]).toFixed(2) } < /td>
+                    td > ₹{ Number(product[4]).toFixed(2) } <
+                    /td>
 
                     <
                     td > {
-                        product[3] < 10 ? ( <
-                            span className = "low-stock" > 🔴Low Stock < /span>
+                        Number(product[3]) < 10 ? ( <
+                            span className = "low-stock" >
+                            Low Stock <
+                            /span>
                         ) : ( <
-                            span className = "in-stock" > 🟢In Stock < /span>
+                            span className = "in-stock" >
+                            In Stock <
+                            /span>
                         )
                     } <
                     /td>
 
                     <
                     td className = "action-buttons" >
-
                     <
                     button className = "edit-btn"
                     onClick = {
-                        () => handleEdit(product)
-                    } > ✏Edit <
+                        () => handleEdit(product) } >
+                    Edit <
                     /button>
 
                     <
                     button className = "delete-btn"
                     onClick = {
-                        () => handleDelete(product[0])
-                    } > 🗑Delete <
+                        () => handleDelete(product[0]) } >
+                    Delete <
                     /button>
 
                     <

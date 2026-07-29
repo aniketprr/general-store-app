@@ -186,8 +186,8 @@ function Products({ searchTerm, setSearchTerm }) {
             button className = "retry-btn"
             onClick = { fetchProducts } >
             Retry <
-            /button> <
-            /div>
+            /button> < /
+            div >
         );
     }
     return ( <
@@ -199,8 +199,8 @@ function Products({ searchTerm, setSearchTerm }) {
         div >
         <
         h2 > 📦Inventory Management < /h2> <
-        p > Manage your products, stock and pricing < /p> <
-        /div> <
+        p > Manage your products, stock and pricing < /p> < /
+        div > <
         /div>
 
         { /* ---------- Statistics ---------- */ }
@@ -221,8 +221,8 @@ function Products({ searchTerm, setSearchTerm }) {
         div >
         <
         span > Total Products < /span> <
-        h3 > { totalProducts } < /h3> <
-        /div> <
+        h3 > { totalProducts } < /h3> < /
+        div > <
         /div>
 
         <
@@ -238,8 +238,8 @@ function Products({ searchTerm, setSearchTerm }) {
         div >
         <
         span > Categories < /span> <
-        h3 > { totalCategories } < /h3> <
-        /div> <
+        h3 > { totalCategories } < /h3> < /
+        div > <
         /div>
 
         <
@@ -255,8 +255,8 @@ function Products({ searchTerm, setSearchTerm }) {
         div >
         <
         span > Total Stock < /span> <
-        h3 > { totalStock } < /h3> <
-        /div> <
+        h3 > { totalStock } < /h3> < /
+        div > <
         /div>
 
         <
@@ -272,8 +272,8 @@ function Products({ searchTerm, setSearchTerm }) {
         div >
         <
         span > Low Stock < /span> <
-        h3 > { lowStock } < /h3> <
-        /div> <
+        h3 > { lowStock } < /h3> < /
+        div > <
         /div>
 
         <
@@ -295,7 +295,8 @@ function Products({ searchTerm, setSearchTerm }) {
         placeholder = "Search products..."
         value = { searchTerm }
         onChange = {
-            (e) => setSearchTerm(e.target.value) }
+            (e) => setSearchTerm(e.target.value)
+        }
         />
 
         <
@@ -304,14 +305,15 @@ function Products({ searchTerm, setSearchTerm }) {
         <
         select value = { categoryFilter }
         onChange = {
-            (e) => setCategoryFilter(e.target.value) } >
+            (e) => setCategoryFilter(e.target.value)
+        } >
         <
         option value = "" > All Categories < /option> <
         option value = "Grocery" > Grocery < /option> <
         option value = "Snack" > Snack < /option> <
         option value = "Beverage" > Beverage < /option> <
-        option value = "Dairy" > Dairy < /option> <
-        /select>
+        option value = "Dairy" > Dairy < /option> < /
+        select >
 
         <
         /div>
@@ -461,14 +463,16 @@ function Products({ searchTerm, setSearchTerm }) {
                     <
                     button className = "edit-btn"
                     onClick = {
-                        () => handleEdit(product) } >
+                        () => handleEdit(product)
+                    } >
                     Edit <
                     /button>
 
                     <
                     button className = "delete-btn"
                     onClick = {
-                        () => handleDelete(product[0]) } >
+                        () => handleDelete(product[0])
+                    } >
                     Delete <
                     /button>
 

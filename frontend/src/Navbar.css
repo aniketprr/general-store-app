@@ -1,24 +1,33 @@
 .navbar {
     background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 18px;
-    padding: 20px 30px;
+    padding: 18px 28px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
-    margin-bottom: 30px;
+    margin-bottom: 28px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    transition: all .3s ease;
 }
 
+
+/* Left */
+
 .navbar-left h2 {
-    color: #1e293b;
-    font-size: 38px;
-    margin-bottom: 5px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
 }
 
 .navbar-left p {
     color: #64748b;
-    font-size: 15px;
+    font-size: 14px;
 }
+
+
+/* Right */
 
 .navbar-right {
     display: flex;
@@ -26,64 +35,88 @@
     gap: 18px;
 }
 
+
+/* Search */
+
 .navbar-right input {
-    width: 260px;
+    width: 300px;
     padding: 12px 18px;
-    border: 1px solid #d1d5db;
-    border-radius: 30px;
-    outline: none;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: #f8fafc;
     font-size: 15px;
+    transition: .25s;
 }
 
 .navbar-right input:focus {
+    outline: none;
     border-color: #2563eb;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
 }
 
+
+/* Notification */
+
 .notification {
-    width: 46px;
-    height: 46px;
-    background: #f1f5f9;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
+    background: #f8fafc;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: .25s;
+    border: 1px solid #e2e8f0;
     font-size: 20px;
 }
 
 .notification:hover {
-    background: #e2e8f0;
+    background: #2563eb;
+    color: white;
+    transform: translateY(-2px);
 }
+
+
+/* Profile */
 
 .profile {
     display: flex;
     align-items: center;
     gap: 12px;
+    padding-left: 12px;
+    border-left: 1px solid #e2e8f0;
 }
 
 .avatar {
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    background: #2563eb;
-    color: #ffffff;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
     font-size: 18px;
+    font-weight: bold;
 }
 
 .profile h4 {
-    color: #1e293b;
-    margin-bottom: 2px;
+    margin: 0;
+    color: #0f172a;
+    font-size: 15px;
 }
 
 .profile small {
     color: #64748b;
+    font-size: 13px;
 }
 
-@media(max-width:992px) {
+
+/* Responsive */
+
+@media (max-width:992px) {
     .navbar {
         flex-direction: column;
         align-items: flex-start;
@@ -95,42 +128,62 @@
     }
     .navbar-right input {
         width: 100%;
-        max-width: 320px;
     }
 }
 
-@media(max-width:768px) {
+@media (max-width:768px) {
     .navbar {
         padding: 18px;
     }
     .navbar-left h2 {
-        font-size: 28px;
+        font-size: 24px;
     }
     .navbar-right {
         flex-wrap: wrap;
         gap: 12px;
     }
-    .navbar-right input {
-        width: 100%;
-    }
     .profile h4,
     .profile small {
         display: none;
     }
+    .visually-hidden {
+        position: absolute;
+        left: -9999px;
+    }
+    .notification {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+    .notification:focus,
+    .profile:focus,
+    input:focus,
+    button:focus,
+    select:focus {
+        outline: 3px solid #2563eb;
+        outline-offset: 3px;
+    }
 }
 
-.logout-btn {
-    padding: 10px 18px;
-    background: #ef4444;
-    color: white;
-    border: none;
-    border-radius: 8px;
+.navbar input:focus {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+.notification {
     cursor: pointer;
-    font-weight: 600;
-    transition: .3s;
+    transition: transform 0.2s ease;
 }
 
-.logout-btn:hover {
-    background: #dc2626;
+.notification:hover {
+    transform: scale(1.1);
+}
+
+.profile {
+    cursor: pointer;
+}
+
+.profile:hover {
     transform: translateY(-2px);
+    transition: all 0.2s ease;
 }

@@ -42,7 +42,8 @@ function App() {
 
         <
         Suspense fallback = { < h2 style = {
-                { padding: "30px" } } > Loading... < /h2>}>
+                { padding: "30px" }
+            } > Loading... < /h2>}>
 
             {
                 activePage === "dashboard" && ( <
@@ -73,8 +74,8 @@ function App() {
             { activePage === "settings" && < Settings / > }
 
             <
-            /Suspense> <
-            /div> <
+            /Suspense> < /
+            div > <
             /div>
         );
     }

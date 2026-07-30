@@ -1,4 +1,4 @@
-# AI Usage Report
+# AI Report
 
 ## Project
 
@@ -6,91 +6,163 @@ General Store Inventory Management System
 
 ---
 
-## AI Tool Used
+# AI Tools Used
 
-ChatGPT (OpenAI)
+The following AI tools were used during development:
 
----
-
-## Purpose of AI Usage
-
-AI was used as a development assistant throughout the project to improve productivity, understand concepts, and accelerate implementation.
+- ChatGPT (Primary development assistant)
+- GitHub Copilot (Code suggestions)
+- Online documentation (React, Flask, Axios)
 
 ---
 
-## Areas Where AI Was Used
+# Purpose of AI Usage
 
-### Frontend Development
+AI was used to:
 
-- React component structure
-- State management using React Hooks
-- Responsive CSS improvements
-- Product management UI
-- Dashboard UI
-- Error handling
-- Loading states
-- Code splitting using React.lazy()
-- Suspense implementation
-
----
-
-### Backend Development
-
-- Flask API structure
-- REST API implementation
-- CRUD operations
-- API integration using Axios
-- Error handling
+- Generate React components
+- Generate Flask API examples
+- Debug frontend errors
+- Improve UI consistency
+- Create documentation
+- Optimize search functionality
+- Improve performance
+- Implement error handling
 
 ---
 
-### Code Refactoring
+# Prompts Used
 
-AI assisted in:
+Some of the prompts used during development included:
 
-- Organizing project structure
-- Improving code readability
-- Reducing duplicate code
-- Creating reusable service functions
+- Create a React inventory management dashboard.
+- Design an enterprise-style dashboard UI.
+- Create reusable React components.
+- Fix Axios API integration errors.
+- Implement CRUD operations using Flask.
+- Improve loading states using skeleton components.
+- Add debounced product search.
+- Improve accessibility using ARIA labels.
+- Generate Architecture documentation.
+- Generate project README.
 
 ---
 
-### Debugging
+# Incorrect AI Responses
 
-AI helped identify and resolve issues such as:
+During development, AI occasionally produced incorrect or incomplete solutions.
 
-- Import/export errors
-- Axios configuration problems
-- React component rendering issues
+Examples include:
+
+### Example 1
+
+Suggested incorrect Axios imports that resulted in API methods not being available.
+
+Issue:
+
+api.get is not a function
+
+Manual Fix:
+
+Verified the Axios instance and corrected the import/export statements.
+
+---
+
+### Example 2
+
+Generated JSX formatting that caused parsing errors.
+
+Issue:
+
+Unexpected token
+
+
+Manual Fix:
+
+Rewrote the affected components using valid JSX syntax.
+
+---
+
+### Example 3
+
+Suggested placing debounced search logic inside the Products component.
+
+Issue:
+
+The search input was actually located inside the Navbar component.
+
+Manual Fix:
+
+Moved the debounce implementation to Navbar where the input is rendered.
+
+---
+
+### Example 4
+
+Generated incorrect ErrorBoundary integration.
+
+Issue:
+
+Component has no default export
+
+
+Manual Fix:
+
+Corrected exports and restored the ErrorBoundary implementation.
+
+---
+
+# Bugs Introduced During Development
+
+Some bugs encountered included:
+
+- Incorrect React imports
+- Dashboard service import errors
+- Product service import errors
+- API response handling issues
 - JSX syntax errors
-- API integration issues
-- State management errors
+- Component export mistakes
+- State synchronization problems
+- Search integration bugs
 
 ---
 
-### Documentation
+# Manual Fixes Performed
 
-AI assisted in preparing:
+The following corrections were completed manually:
 
-- README.md
-- AI Usage Report
-- Architecture documentation
-
----
-
-## Human Contribution
-
-The developer was responsible for:
-
-- Understanding the generated code
-- Integrating all components
-- Testing application functionality
-- Debugging project-specific issues
-- Making design decisions
-- Deploying the application
+- Fixed React imports
+- Corrected Axios service layer
+- Improved component structure
+- Fixed dashboard rendering
+- Corrected product loading
+- Implemented debounced search
+- Added skeleton loading
+- Improved error handling
+- Updated documentation
 
 ---
 
-## Conclusion
+# Lessons Learned
 
-AI was used as a software development assistant to improve development speed and code quality. All generated code was reviewed, integrated, tested, and validated before being used in the final application.
+This project helped improve understanding of:
+
+- React Hooks
+- Component architecture
+- API integration
+- Error boundaries
+- State management
+- Debounced search
+- Frontend debugging
+- Performance optimization
+- Documentation practices
+- Working with AI-generated code responsibly
+
+---
+
+# Reflection
+
+AI significantly accelerated development by assisting with code generation and debugging.
+
+However, AI-generated code was always manually reviewed, tested, and corrected where necessary. This project demonstrated that AI is most effective as a development assistant rather than a replacement for engineering judgment.
+

@@ -1,70 +1,233 @@
-# Getting Started with Create React App
+# General Store Inventory Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack Inventory Management System developed using **React.js**, **Flask**, and **SQLite** to help manage products, inventory, sales, and reports through a modern dashboard interface.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+# Project Overview
 
-### `npm start`
+This application allows store administrators to manage inventory efficiently by providing product management, sales tracking, dashboard analytics, reporting, and inventory monitoring in a responsive web interface.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The project follows a modular frontend architecture with a REST API backend.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+# Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Dashboard with inventory summary
+- Product Management (Add, Edit, Delete)
+- Product Search
+- Product Filtering
+- Sales History
+- Reports Page
+- Settings Page
+- Responsive Layout
+- Skeleton Loading
+- Error Handling
+- Toast Notifications
+- Debounced Search
+- Lazy Loaded Pages
+- Code Splitting
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Technology Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Frontend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React.js
+- Axios
+- React Icons
+- React Toastify
+- Chart.js
+- Recharts
 
-### `npm run eject`
+## Backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Flask
+- SQLite
+- Flask REST API
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Folder Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+general-store-app/
 
-## Learn More
+frontend/
+src/
+components/
+pages/
+services/
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+backend/
+app.py
+database.db
+requirements.txt
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+# Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Clone Repository
 
-### Analyzing the Bundle Size
+```bash
+git clone <repository-url>
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Backend Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+cd backend
 
-### Advanced Configuration
+pip install -r requirements.txt
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+python app.py
+```
 
-### Deployment
+Backend runs on:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```
+http://localhost:5000
+```
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Frontend Setup
+
+```bash
+cd frontend
+
+npm install
+
+npm start
+```
+
+Frontend runs on:
+
+```
+http://localhost:3000
+```
+
+---
+
+# Environment Variables
+
+Backend
+
+```
+PORT=5000
+```
+
+Frontend
+
+```
+REACT_APP_API_URL=http://localhost:5000
+```
+
+---
+
+# API Endpoints
+
+## Products
+
+GET
+
+```
+/products
+```
+
+POST
+
+```
+/products
+```
+
+PUT
+
+```
+/products/:id
+```
+
+DELETE
+
+```
+/products/:id
+```
+
+---
+
+## Dashboard
+
+GET
+
+```
+/dashboard
+```
+
+---
+
+# Deployment
+
+Frontend
+
+(Add your Vercel URL here)
+
+Backend
+
+(Add your Render URL here)
+
+---
+
+# Design Decisions
+
+- Component-based architecture
+- Service layer for API communication
+- Reusable UI components
+- Error Boundary for crash recovery
+- Skeleton loading for better UX
+- Debounced search for improved performance
+
+---
+
+# Known Limitations
+
+- No authentication system
+- Search is client-side
+- Offline mode not implemented
+- Analytics not implemented
+- React Router not yet integrated
+
+---
+
+# Testing
+
+- Manual CRUD testing
+- Dashboard verification
+- Product search testing
+- Responsive layout testing
+- Error handling verification
+
+---
+
+# Future Improvements
+
+- React Router
+- Progressive Web App (PWA)
+- Authentication & Authorization
+- Analytics Dashboard
+- Server-side Search
+- Pagination
+- Product Comparison
+- Dark Mode
+- Multi-user Support
+
+---
+
+# Author
+
+Aniket Pardeshi

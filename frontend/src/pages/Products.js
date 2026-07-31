@@ -1,6 +1,5 @@
 import React from "react";
 
-import ProductSkeleton from "../components/ProductSkeleton";
 import InventorySummary from "../components/InventorySummary";
 import ProductFilters from "../components/ProductFilters";
 import ProductForm from "../components/ProductForm";

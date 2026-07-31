@@ -43,38 +43,27 @@ function SalesHistory() {
         tr > <
         /thead>
 
-        <
-        tbody >
+       <tbody>
 
-        {
-            sales.map((sale) => (
+  {sales.map((sale) => (
 
-                <
-                tr key = { sale[0] } >
+    <tr key={sale.sale_id}>
 
-                <
-                td > INV - { sale[0] } < /td>
+      <td>INV-{sale.sale_id}</td>
 
-                <
-                td > { sale[1] } < /td>
+      <td>{sale.product_name}</td>
 
-                <
-                td > { sale[2] } < /td>
+      <td>{sale.category}</td>
 
-                <
-                td > { sale[3] } < /td>
+      <td>{sale.quantity_sold}</td>
 
-                <
-                td > ₹{ Number(sale[4]).toFixed(2) } < /td>
+      <td>₹{Number(sale.total_amount).toFixed(2)}</td>
 
-                <
-                /tr>
+    </tr>
 
-            ))
-        }
+  ))}
 
-        <
-        /tbody>
+</tbody>
 
         <
         /table>

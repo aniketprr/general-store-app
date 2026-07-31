@@ -17,9 +17,8 @@ def get_connection():
 @app.route("/")
 def home():
     return jsonify({
-        "message": "General Store Backend Connected Successfully"
+        "message": "THIS IS MY LOCAL BACKEND"
     })
-
 
 # =====================================================
 # PRODUCTS
@@ -42,12 +41,25 @@ def get_products():
         ORDER BY product_id
     """)
 
-    products = cur.fetchall()
+    rows = cur.fetchall()
+
+    result = []
+
+    for row in rows:
+        result.append({
+            "id": row[0],
+            "name": row[1],
+            "category": row[2],
+            "quantity": row[3],
+            "price": float(row[4])
+        })
 
     cur.close()
     conn.close()
 
-    return jsonify(products)
+    print("RETURNING:", result)
+
+    return jsonify(result)
 
 
 @app.route("/products", methods=["POST"])
@@ -132,6 +144,8 @@ def delete_product(id):
     return jsonify({
         "message": "Product Deleted Successfully"
     })
+
+
 # =====================================================
 # SALES HISTORY
 # =====================================================
@@ -155,7 +169,18 @@ def get_sales():
         ORDER BY s.sale_id DESC
     """)
 
-    sales = cur.fetchall()
+    rows = cur.fetchall()
+
+    sales = []
+
+    for row in rows:
+        sales.append({
+            "sale_id": row[0],
+            "product_name": row[1],
+            "category": row[2],
+            "quantity_sold": row[3],
+            "total_amount": float(row[4])
+        })
 
     cur.close()
     conn.close()
@@ -173,36 +198,36 @@ def dashboard():
     conn = get_connection()
     cur = conn.cursor()
 
-    # Total Products
     cur.execute("SELECT COUNT(*) FROM products")
     total_products = cur.fetchone()[0]
 
-    # Total Revenue
     cur.execute("SELECT COALESCE(SUM(total_amount),0) FROM sales")
     revenue = cur.fetchone()[0]
 
-    # Total Sales
     cur.execute("SELECT COUNT(*) FROM sales")
     total_sales = cur.fetchone()[0]
 
-    # Low Stock
     cur.execute("SELECT COUNT(*) FROM products WHERE quantity < 10")
     low_stock = cur.fetchone()[0]
 
-    # Total Profit
-    cur.execute("SELECT COALESCE(SUM(profit),0) FROM sales")
-    profit = cur.fetchone()[0]
+    try:
+        cur.execute("SELECT COALESCE(SUM(profit),0) FROM sales")
+        profit = cur.fetchone()[0]
+    except:
+        profit = 0
 
     cur.close()
     conn.close()
 
     return jsonify({
-    "products": total_products,
-    "revenue": float(revenue),
-    "profit": float(profit),
-    "sales": total_sales,
-    "low_stock": low_stock
-})
+        "products": total_products,
+        "revenue": float(revenue),
+        "profit": float(profit),
+        "sales": total_sales,
+        "low_stock": low_stock
+    })
+
+
 # =====================================================
 # RECORD SALE
 # =====================================================
@@ -218,11 +243,10 @@ def record_sale():
     conn = get_connection()
     cur = conn.cursor()
 
-    # Get Product
     cur.execute("""
         SELECT quantity, price
         FROM products
-        WHERE product_id = %s
+        WHERE product_id=%s
     """, (product_id,))
 
     product = cur.fetchone()
@@ -230,20 +254,22 @@ def record_sale():
     if product is None:
         cur.close()
         conn.close()
-        return jsonify({"error": "Product not found"}), 404
+        return jsonify({
+            "error": "Product not found"
+        }), 404
 
     available_stock = product[0]
     price = float(product[1])
 
-    # Check Stock
     if quantity_sold > available_stock:
         cur.close()
         conn.close()
-        return jsonify({"error": "Not enough stock available"}), 400
+        return jsonify({
+            "error": "Not enough stock available"
+        }), 400
 
     total_amount = quantity_sold * price
 
-    # Insert Sale
     cur.execute("""
         INSERT INTO sales
         (
@@ -258,7 +284,6 @@ def record_sale():
         total_amount
     ))
 
-    # Update Stock
     cur.execute("""
         UPDATE products
         SET quantity = quantity - %s
@@ -277,6 +302,8 @@ def record_sale():
         "message": "Sale Recorded Successfully",
         "total_amount": total_amount
     })
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)

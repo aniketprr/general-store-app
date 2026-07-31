@@ -10,7 +10,7 @@ import {
     Legend,
 } from "chart.js";
 
-import { Bar } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 
 import "./Reports.css";
 
@@ -37,43 +37,7 @@ function Reports() {
             .catch((err) => console.log(err));
     }, []);
 
-    const chartData = {
-        labels: [
-            "Products",
-            "Sales",
-            "Revenue",
-            "Profit",
-            "Low Stock",
-        ],
-        datasets: [{
-            label: "Store Overview",
-            data: [
-                dashboard.products,
-                dashboard.sales,
-                dashboard.revenue,
-                dashboard.profit,
-                dashboard.low_stock,
-            ],
-            backgroundColor: [
-                "#2563eb",
-                "#10b981",
-                "#f59e0b",
-                "#8b5cf6",
-                "#ef4444",
-            ],
-            borderRadius: 8,
-        }, ],
-    };
-
-    const chartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false,
-            },
-        },
-    };
+    
 
     return ( <
         div className = "reports-container" >
@@ -127,6 +91,14 @@ function Reports() {
 
         <
         h2 > Store Performance < /h2>
+
+        <
+        div className = "chart-wrapper" >
+        <
+        Bar data = { chartData }
+        options = { chartOptions }
+        /> < /
+        div >
 
         <
         /div>

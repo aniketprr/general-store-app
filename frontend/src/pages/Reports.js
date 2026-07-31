@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 
 import {
     Chart as ChartJS,
@@ -32,8 +32,7 @@ function Reports() {
     });
 
     useEffect(() => {
-        axios
-            .get("https://general-store-app-2.onrender.com/dashboard")
+        api.get("/dashboard")
             .then((res) => setDashboard(res.data))
             .catch((err) => console.log(err));
     }, []);
@@ -128,14 +127,6 @@ function Reports() {
 
         <
         h2 > Store Performance < /h2>
-
-        <
-        div className = "chart-wrapper" >
-        <
-        Bar data = { chartData }
-        options = { chartOptions }
-        /> < /
-        div >
 
         <
         /div>

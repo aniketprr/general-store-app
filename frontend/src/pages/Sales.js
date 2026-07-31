@@ -21,7 +21,7 @@ function Sales() {
 
     const fetchProducts = () => {
         axios
-            .get("https://general-store-app-2.onrender.com/products")
+            .get("http://localhost:5000/products")
             .then((res) => setProducts(res.data))
             .catch((err) => console.log(err));
     };
@@ -29,7 +29,7 @@ function Sales() {
     const handleProductChange = (e) => {
         const id = Number(e.target.value);
 
-        const product = products.find((p) => p[0] === id);
+        const product = products.find((p) => p.id === id);
 
         setSelectedProduct(product);
 
@@ -48,7 +48,7 @@ function Sales() {
 
     const total =
         selectedProduct && saleData.quantity_sold ?
-        Number(selectedProduct[4]) * Number(saleData.quantity_sold) :
+        Number(selectedProduct.price) * Number(saleData.quantity_sold) :
         0;
 
     // ===========================
@@ -77,9 +77,9 @@ function Sales() {
 
         doc.line(20, 80, 190, 80);
 
-        doc.text(`Product : ${product[1]}`, 20, 95);
-        doc.text(`Category : ${product[2]}`, 20, 105);
-        doc.text(`Price : ₹${Number(product[4]).toFixed(2)}`, 20, 115);
+        doc.text(`Product : ${product.name}`, 20, 95);
+        doc.text(`Category : ${product.category}`, 20, 105);
+        doc.text(`Price : ₹${Number(product.price).toFixed(2)}`, 20, 115);
         doc.text(`Quantity : ${quantity}`, 20, 125);
 
         doc.line(20, 135, 190, 135);
@@ -109,7 +109,7 @@ function Sales() {
         setLoading(true);
 
         axios
-            .post("https://general-store-app-2.onrender.com/sales", {
+            .post("http://localhost:5000/sales", {
                 product_id: Number(saleData.product_id),
                 quantity_sold: Number(saleData.quantity_sold),
             })
@@ -160,8 +160,8 @@ function Sales() {
         div >
         <
         h2 > 🛒Sales Management < /h2> <
-        p > Record product sales and generate bill < /p> < /
-        div > <
+        p > Record product sales and generate bill < /p> <
+        /div> <
         /div>
 
         <
@@ -172,14 +172,14 @@ function Sales() {
         select value = { saleData.product_id }
         onChange = { handleProductChange }
         required >
-
         <
         option value = "" > Select Product < /option>
 
         {
             products.map((product) => ( <
-                option key = { product[0] }
-                value = { product[0] } > { product[1] }(Stock: { product[3] }) <
+                option key = { product.id }
+                value = { product.id } >
+                { product.name }(Stock: { product.quantity }) <
                 /option>
             ))
         } <
@@ -191,79 +191,85 @@ function Sales() {
         placeholder = "Quantity"
         required value = { saleData.quantity_sold }
         onChange = { handleQuantityChange }
-        /> {
-        selectedProduct && ( <
-            div className = "bill-card" >
+        />
 
-            <
-            h3 > 🧾Bill Summary < /h3>
+        {
+            selectedProduct && ( <
+                div className = "bill-card" >
 
-            <
-            div className = "bill-details" >
+                <
+                h3 > 🧾Bill Summary < /h3>
 
-            <
-            div className = "bill-row" >
-            <
-            span > Product < /span> <
-            strong > { selectedProduct[1] } < /strong> < /
-            div >
+                <
+                div className = "bill-details" >
 
-            <
-            div className = "bill-row" >
-            <
-            span > Category < /span> <
-            strong > { selectedProduct[2] } < /strong> < /
-            div >
+                <
+                div className = "bill-row" >
+                <
+                span > Product < /span> <
+                strong > { selectedProduct.name } < /strong> <
+                /div>
 
-            <
-            div className = "bill-row" >
-            <
-            span > Price < /span> <
-            strong > ₹{ Number(selectedProduct[4]).toFixed(2) } < /strong> < /
-            div >
+                <
+                div className = "bill-row" >
+                <
+                span > Category < /span> <
+                strong > { selectedProduct.category } < /strong> <
+                /div>
 
-            <
-            div className = "bill-row" >
-            <
-            span > Available Stock < /span> <
-            strong > { selectedProduct[3] } < /strong> < /
-            div >
+                <
+                div className = "bill-row" >
+                <
+                span > Price < /span> <
+                strong > ₹{ Number(selectedProduct.price).toFixed(2) } <
+                /strong> <
+                /div>
 
-            <
-            div className = "bill-row" >
-            <
-            span > Quantity < /span> <
-            strong > { saleData.quantity_sold || 0 } < /strong> < /
-            div >
+                <
+                div className = "bill-row" >
+                <
+                span > Available Stock < /span> <
+                strong > { selectedProduct.quantity } < /strong> <
+                /div>
 
-            <
-            hr / >
+                <
+                div className = "bill-row" >
+                <
+                span > Quantity < /span> <
+                strong > { saleData.quantity_sold || 0 } < /strong> <
+                /div>
 
-            <
-            div className = "bill-total" >
-            <
-            span > Total Amount < /span> <
-            h2 > ₹{ total.toFixed(2) } < /h2> < /
-            div >
+                <
+                hr / >
 
-            <
-            /div>
+                <
+                div className = "bill-total" >
+                <
+                span > Total Amount < /span> <
+                h2 > ₹{ total.toFixed(2) } < /h2> <
+                /div>
 
-            <
-            /div>
-        )
-    }
+                <
+                /div>
 
-    <
-    button className = "sale-btn"
-    type = "submit"
-    disabled = { loading } > { loading ? "Recording..." : "💳 Record Sale" } <
+                <
+                /div>
+            )
+        }
+
+        <
+        button className = "sale-btn"
+        type = "submit"
+        disabled = { loading } >
+        { loading ? "Recording..." : "💳 Record Sale" } <
         /button>
 
-    <
-    /form> < /
-    div >
-);
+        <
+        /form>
+
+        <
+        /div>
+    );
 }
 
 export default Sales;

@@ -1,83 +1,94 @@
-import React, { Suspense, lazy, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
 import Navbar from "./Navbar";
 
-const Dashboard = lazy(() =>
-    import ("./Dashboard"));
-const SalesChart = lazy(() =>
-    import ("./SalesChart"));
-const Products = lazy(() =>
-    import ("./pages/Products"));
-const Sales = lazy(() =>
-    import ("./pages/Sales"));
-const Reports = lazy(() =>
-    import ("./pages/Reports"));
-const SalesHistory = lazy(() =>
-    import ("./pages/SalesHistory"));
-const Settings = lazy(() =>
-    import ("./pages/Settings"));
+import Dashboard from "./Dashboard";
+
+import Products from "./pages/Products";
+import Sales from "./pages/Sales";
+import Reports from "./pages/Reports";
+import SalesHistory from "./pages/SalesHistory";
+import Settings from "./pages/Settings";
+
+function DashboardPage() {
+  return <Dashboard />;
+}
 
 function App() {
-    const [activePage, setActivePage] = useState("dashboard");
-    const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-    const handleLogout = () => {};
+  const handleLogout = () => {};
 
-    return ( <
-        div className = "app" >
-        <
-        Sidebar activePage = { activePage }
-        setActivePage = { setActivePage }
-        onLogout = { handleLogout }
-        />
+  return (
+    <BrowserRouter>
+      <div className="app">
 
-        <
-        div className = "main-content" >
-        <
-        Navbar searchTerm = { searchTerm }
-        setSearchTerm = { setSearchTerm }
-        />
+        <Sidebar onLogout={handleLogout} />
 
-        <
-        Suspense fallback = { < h2 style = {
-                { padding: "30px" }
-            } > Loading... < /h2>}>
+        <div className="main-content">
 
-            {
-                activePage === "dashboard" && ( <
-                    >
-                    <
-                    Dashboard / >
-                    <
-                    SalesChart / >
-                    <
-                    />
-                )
-            }
+          <Navbar
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
 
-            {
-                activePage === "products" && ( <
-                    Products searchTerm = { searchTerm }
-                    setSearchTerm = { setSearchTerm }
-                    />
-                )
-            }
+          <Routes>
 
-            { activePage === "sales" && < Sales / > }
+            <Route
+              path="/"
+              element={<DashboardPage />}
+            />
 
-            { activePage === "reports" && < Reports / > }
+            <Route
+              path="/products"
+              element={
+                <Products
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                />
+              }
+            />
 
-            { activePage === "history" && < SalesHistory / > }
+            <Route
+              path="/sales"
+              element={<Sales />}
+            />
 
-            { activePage === "settings" && < Settings / > }
+            <Route
+              path="/reports"
+              element={<Reports />}
+            />
 
-            <
-            /Suspense> < /
-            div > <
-            /div>
-        );
-    }
+            <Route
+              path="/history"
+              element={<SalesHistory />}
+            />
 
-    export default App;
+            <Route
+              path="/settings"
+              element={<Settings />}
+            />
+
+            <Route
+              path="*"
+              element={<Navigate to="/" replace />}
+            />
+
+          </Routes>
+
+        </div>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;

@@ -1,116 +1,131 @@
 import React, { useState } from "react";
 import {
-    FaHome,
-    FaBox,
-    FaShoppingCart,
-    FaChartBar,
-    FaHistory,
-    FaCog,
-    FaSignOutAlt,
-    FaBars,
+  FaHome,
+  FaBox,
+  FaShoppingCart,
+  FaChartBar,
+  FaHistory,
+  FaCog,
+  FaSignOutAlt,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
+
+import { NavLink } from "react-router-dom";
 
 import "./Sidebar.css";
 
-function Sidebar({ activePage, setActivePage, onLogout }) {
-    const [collapsed, setCollapsed] = useState(false);
+function Sidebar({ onLogout }) {
 
-    return ( <
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+
+      <button
+        className="toggle-btn"
+        onClick={() => setOpen(!open)}
+      >
+        {open ? <FaTimes /> : <FaBars />}
+      </button>
+
+      {open && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      <aside
+        className={`sidebar ${open ? "open" : ""}`}
+      >
+
+        <h2 className="logo">
+          🛒 Store
+        </h2>
+
+        <ul>
+
+          <li>
+            <NavLink
+              to="/"
+              className="nav-link"
+              onClick={() => setOpen(false)}
             >
-            <
-            button className = "toggle-btn"
-            onClick = {
-                () => setCollapsed(!collapsed)
-            } >
-            <
-            FaBars / >
-            <
-            /button>
+              <FaHome />
+              <span>Dashboard</span>
+            </NavLink>
+          </li>
 
-            <
-            div className = { `sidebar ${collapsed ? "collapsed" : ""}` } >
+          <li>
+            <NavLink
+              to="/products"
+              className="nav-link"
+              onClick={() => setOpen(false)}
+            >
+              <FaBox />
+              <span>Products</span>
+            </NavLink>
+          </li>
 
-            <
-            h2 className = "logo" > 🛒{!collapsed && "Store" } <
-            /h2>
+          <li>
+            <NavLink
+              to="/sales"
+              className="nav-link"
+              onClick={() => setOpen(false)}
+            >
+              <FaShoppingCart />
+              <span>Sales</span>
+            </NavLink>
+          </li>
 
-            <
-            ul >
+          <li>
+            <NavLink
+              to="/reports"
+              className="nav-link"
+              onClick={() => setOpen(false)}
+            >
+              <FaChartBar />
+              <span>Reports</span>
+            </NavLink>
+          </li>
 
-            <
-            li className = { activePage === "dashboard" ? "active" : "" }
-            onClick = {
-                () => setActivePage("dashboard")
-            } >
-            <
-            FaHome / > {!collapsed && < span > Dashboard < /span>} < /
-                li >
+          <li>
+            <NavLink
+              to="/history"
+              className="nav-link"
+              onClick={() => setOpen(false)}
+            >
+              <FaHistory />
+              <span>Sales History</span>
+            </NavLink>
+          </li>
 
-                <
-                li
-                className = { activePage === "products" ? "active" : "" }
-                onClick = {
-                    () => {
-                        console.log("Products clicked");
-                        setActivePage("products");
-                    }
-                } >
-                <
-                FaBox / > {!collapsed && < span > Products < /span>} < /
-                    li >
+          <li>
+            <NavLink
+              to="/settings"
+              className="nav-link"
+              onClick={() => setOpen(false)}
+            >
+              <FaCog />
+              <span>Settings</span>
+            </NavLink>
+          </li>
 
-                    <
-                    li
-                    className = { activePage === "sales" ? "active" : "" }
-                    onClick = {
-                        () => setActivePage("sales")
-                    } >
-                    <
-                    FaShoppingCart / > {!collapsed && < span > Sales < /span>} < /
-                        li >
+        </ul>
 
-                        <
-                        li
-                        className = { activePage === "reports" ? "active" : "" }
-                        onClick = {
-                            () => setActivePage("reports")
-                        } >
-                        <
-                        FaChartBar / > {!collapsed && < span > Reports < /span>} < /
-                            li >
+        <button
+          className="logout"
+          onClick={onLogout}
+        >
+          <FaSignOutAlt />
+          <span>Logout</span>
+        </button>
 
-                            <
-                            li
-                            className = { activePage === "history" ? "active" : "" }
-                            onClick = {
-                                () => setActivePage("history")
-                            } >
-                            <
-                            FaHistory / > {!collapsed && < span > Sales History < /span>} < /
-                                li >
+      </aside>
 
-                                <
-                                li
-                                className = { activePage === "settings" ? "active" : "" }
-                                onClick = {
-                                    () => setActivePage("settings") } >
-                                <
-                                FaCog / > {!collapsed && < span > Settings < /span>} <
-                                    /li> <
-                                    /ul>
+    </>
+  );
+}
 
-                                    <
-                                    button
-                                    className = "logout"
-                                    onClick = { onLogout } >
-                                    <
-                                    FaSignOutAlt / > {!collapsed && < span > Logout < /span>} < /
-                                        button >
-
-                                        <
-                                        /div> < /
-                                        >
-                                    );
-                                }
-
-                                export default Sidebar;
+export default Sidebar;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 import { toast } from "react-toastify";
 import jsPDF from "jspdf";
 import "./Sales.css";
@@ -20,12 +20,11 @@ function Sales() {
     }, []);
 
     const fetchProducts = () => {
-        axios
-            .get("http://localhost:5000/products")
-            .then((res) => setProducts(res.data))
-            .catch((err) => console.log(err));
-    };
-
+    api
+        .get("/products")
+        .then((res) => setProducts(res.data))
+        .catch((err) => console.log(err));
+};  
     const handleProductChange = (e) => {
         const id = Number(e.target.value);
 
@@ -108,8 +107,8 @@ function Sales() {
 
         setLoading(true);
 
-        axios
-            .post("http://localhost:5000/sales", {
+        api
+    .post("/sales", {
                 product_id: Number(saleData.product_id),
                 quantity_sold: Number(saleData.quantity_sold),
             })
